@@ -524,7 +524,7 @@ bool MLS_Mapping::MLS_Mapping_Process(miniMap* p_minimap,string originFilePath)
 	{
 		return false;
 	}
-	p_minimap->getMapSize(xmin,xmax,ymin, ymax);
+	p_minimap->getMapSize(xmin,ymin,xmax, ymax);
 	setOriginFilePath(originFilePath);
 	//printf("forwardmal: the edge:  xmin:%u, xmax:%u, ymin:%u, ymax:%u\n", xmin, xmax, ymin, ymax);
 	vector<float> x_offline, y_offline, th_offline;
