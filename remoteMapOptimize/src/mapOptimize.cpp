@@ -43,25 +43,33 @@ bool mapOptimizeOffline(string originFilePath,string finalMapFileName,
 	 {
 		 //todo:1 封装处理后的文件,以便下传
 			FILE *fp;
-			fp = fopen(finalMapFileName.c_str(), "wb");
+			fp = fopen(finalMapFileName.c_str(), "w");//wb
 			if(fp == NULL)
 			{
 				return false;
 			}
 			unsigned int minX,minY,maxX,maxY;
-			p_minimap->getMapSize(minX,maxX,minY,maxY);
-			fwrite(&minX,sizeof(unsigned int),1,fp);
-			fwrite(&minY,sizeof(unsigned int),1,fp);
-			fwrite(&maxX,sizeof(unsigned int),1,fp);
-			fwrite(&maxY,sizeof(unsigned int),1,fp);
+			p_minimap->getMapSize(minX,minY,maxX,maxY);
+//			fwrite(&minX,sizeof(unsigned int),1,fp);
+//			fwrite(&minY,sizeof(unsigned int),1,fp);
+//			fwrite(&maxX,sizeof(unsigned int),1,fp);
+//			fwrite(&maxY,sizeof(unsigned int),1,fp);
+			printf("p_minimap size (%d,%d)-(%d,%d)\n",minX,minY,maxX,maxY);
+			fprintf(fp,"%d ",minX);
+			fprintf(fp,"%d ",minY);
+			fprintf(fp,"%d ",maxX);
+			fprintf(fp,"%d ",maxY);
+			fprintf(fp,"\n ");
 			char binaryValue = 0;
 			for(unsigned int x =minX;x<=maxX;x++ )
 			{
 				for(unsigned int y =minY;y<=maxY;y++ )
 				{
 					binaryValue = p_minimap->getval(x,y);
-					fwrite(&binaryValue,sizeof(char),1,fp);
+//					fwrite(&binaryValue,sizeof(char),1,fp);
+					fprintf(fp,"%d ",binaryValue);
 				}
+				fprintf(fp,"\n ");
 			}
 			fclose(fp);
 			fp = NULL;

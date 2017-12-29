@@ -138,12 +138,12 @@ public:
 	{
 		return data[(x - xmin)*lenY + (y - ymin)].p_vec_relevant_sonar;
 	}
-	void getMapSize(unsigned int &minX, unsigned int &maxX, unsigned int &minY, unsigned int &maxY)
+	void getMapSize(unsigned int &minX,unsigned int &minY,  unsigned int &maxX, unsigned int &maxY)
 	{
 		minX = xmin;
-		maxX = xmin;
-		minY = xmin;
-		maxY = xmin;
+		minY = ymin;
+		maxX = xmax;
+		maxY = ymax;
 	}
 };
 
