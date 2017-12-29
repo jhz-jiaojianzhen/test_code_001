@@ -9,12 +9,21 @@
 #include"forwardmodal.h"
 using namespace std;
 using namespace boost::python;
-bool mapOptimizeOffline(string originFilePath,string finalMapFileName)
+class MapSize{
+public:
+	 int  minX;
+	 int  maxX;
+	 int  minY;
+	 int  maxY;
+};
+//
+bool mapOptimizeOffline(string originFilePath,string finalMapFileName,
+													unsigned int u32_min_x,
+													unsigned int  u32_min_y,
+													unsigned int  u32_max_x,
+													unsigned int  u32_max_y)
 {
-	 unsigned int u32_min_x = 5;
-	 unsigned int  u32_min_y = 5;
-	 unsigned int  u32_max_x = 795;
-	 unsigned int  u32_max_y = 795;
+	 printf("mapOptimizeOffline:%d, %d, %d, %d\n",u32_min_x,u32_min_y,u32_max_x,u32_max_y);
 	 //todo:1 判断文件是否存在,解析文件获取地图边界
 	 if(false)
 	 {
