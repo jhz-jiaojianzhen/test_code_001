@@ -32,11 +32,8 @@ def allowed_file(filename):
 @app.route('/api/upload',methods=['POST'],strict_slashes=False)
 def api_upload():
     print 'start time:',time.time()
-    # mapSize = MapSize()
-    # mapSize.minX = int(request.values.get('minX', 0))
-    # mapSize.maxX = 0
-    # mapSize.minY = 0
-    # mapSize.maxY = 0
+    rv= jsonify({"errno": 1001, "errmsg": "操作失败"})
+    rv.status_code = 665
     minX = int(request.values.get('minX', 0))
     maxX = int(request.values.get('maxX', 0))
     minY = int(request.values.get('minY', 0))
@@ -52,20 +49,19 @@ def api_upload():
         fname=secure_filename(f.filename)
         print fname
         ext = fname.rsplit('.',1)[1]  # 获取文件后缀
-        unix_time = int(time.time())
-        new_filename= 'ultrasonic_sla.txt'#str(unix_time)+'.'+ext  # 修改了上传的文件名
+        new_filename= str(robotID)+'.'+ext  # 修改了上传的文件名
         f.save(os.path.join(file_dir,new_filename))  #保存文件到upload目录
         token = base64.b64encode(new_filename)
         print token
         ret = mapOptimize.mapOptimizeOffline(os.path.join(file_dir,new_filename),
-                                             os.path.join(file_dir,"aaabbb.bin"),
+                                             os.path.join(file_dir,"final_"+new_filename),
                                              minX,minY,maxX,maxY)#mapSize
         if not ret:
-            return jsonify({"errno": 1001, "errmsg": "上传失败"})
+            return rv
         print 'end time:', time.time()
-        return send_from_directory(file_dir,"aaabbb.bin",as_attachment=True)
+        return send_from_directory(file_dir,"final_"+new_filename,as_attachment=True)
     else:
-        return jsonify({"errno":1001,"errmsg":"上传失败"})
+        return rv
 @app.route('/api/download')
 def download():
     file_dir = os.path.join(basedir, app.config['UPLOAD_FOLDER'])
