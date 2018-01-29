@@ -41,11 +41,13 @@ def api_upload():
     maxX = int(request.values.get('maxX', 0))
     minY = int(request.values.get('minY', 0))
     maxY = int(request.values.get('maxY', 0))
-    # print mapSize.minX,mapSize.maxX,mapSize.maxX,mapSize.minY,mapSize.maxY
+    robotID = str(request.values.get('robotId', ''))
+    print minX,maxX,minY,maxY,robotID
     file_dir=os.path.join(basedir,app.config['UPLOAD_FOLDER'])
     if not os.path.exists(file_dir):
         os.makedirs(file_dir)
-    f=request.files['myfile']  # 从表单的file字段获取文件，myfile为该表单的name值
+    f=request.files['file']  # 从表单的file字段获取文件，myfile为该表单的name值
+    print f.filename
     if f and allowed_file(f.filename):  # 判断是否是允许上传的文件类型
         fname=secure_filename(f.filename)
         print fname
